@@ -1,1 +1,1 @@
-## LSPECT Documentation
+## LSPECT Documentation for users
