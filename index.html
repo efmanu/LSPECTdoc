@@ -71,7 +71,7 @@
                     <nav class="docs-sidebar" data-spy="affix" data-offset-top="300" data-offset-bottom="200" role="navigation">
                         <ul class="nav">
                             <li><a href="#line1">Getting Started</a></li>
-                            <li><a href="#line2">How to Install Paackage</a></li>
+                            <li><a href="#line2">How to Configure</a></li>
                             <li><a href="#line3">Dependecies</a></li>
                             <li><a href="#line4">Parallel Hole SPECT</a></li>
                             <li><a href="#line5">Lightfield SPECT</a></li>
@@ -181,222 +181,251 @@
                                 </div>
                                 <div>
                                     <h4>Parameter Settings</h4>
-                                </div>
-                                <p>Before starting simulation or reconstruction, we need to add system configuration in <strong><i>param_settings.jl</i></strong> file. The template of this file can be found in the test folder of LSPECT package. Or You can copy and paste the following code and save as <strong><i>param_settings.jl</i></strong>.</p>
-                                <pre class="brush: html">
-                                    mutable struct plain_offset
-                                    horizontal::Float64
-                                    vertical::Float64
-                                    end;
-                                    mutable struct grid3D_cube
-                                    nx::Int
-                                    ny::Int
-                                    nz::Int
-                                    minBound::Vector{Float64}
-                                    maxBound::Vector{Float64}
-                                    dx::Float64
-                                    dy::Float64
-                                    dz::Float64
-                                    end;
-                                    mutable struct sphere_details
-                                    radius::Vector{Float64}
-                                    x_shift::Vector{Float64}
-                                    y_shift::Vector{Float64}
-                                    z_shift::Vector{Float64}
-                                    sphere_color::Vector{Char}
-                                    transperancy::Vector{Float64}
-                                    points::Vector{Int}
-                                    spot_color::Vector{Char}
-                                    spot_transperancy::Vector{Float64}
-                                    no_of_radiation_spots::Vector{Int}
-                                    end;
-                                    mutable struct params_list
-                                    base_fld::String#base folder location
-                                    date::String #date
+                                    <p>Before starting simulation or reconstruction, we need to add system configuration in <strong><i>param_settings.jl</i></strong> file. The template of this file can be found in the test folder of LSPECT package. Or You can copy and paste the following code and save as <strong><i>param_settings.jl</i></strong>.</p>
+                                    <pre class="brush: html">
+                                        mutable struct plain_offset
+                                        horizontal::Float64
+                                        vertical::Float64
+                                        end;
+                                        mutable struct grid3D_cube
+                                        nx::Int
+                                        ny::Int
+                                        nz::Int
+                                        minBound::Vector{Float64}
+                                        maxBound::Vector{Float64}
+                                        dx::Float64
+                                        dy::Float64
+                                        dz::Float64
+                                        end;
+                                        mutable struct sphere_details
+                                        radius::Vector{Float64}
+                                        x_shift::Vector{Float64}
+                                        y_shift::Vector{Float64}
+                                        z_shift::Vector{Float64}
+                                        sphere_color::Vector{Char}
+                                        transperancy::Vector{Float64}
+                                        points::Vector{Int}
+                                        spot_color::Vector{Char}
+                                        spot_transperancy::Vector{Float64}
+                                        no_of_radiation_spots::Vector{Int}
+                                        end;
+                                        mutable struct params_list
+                                        base_fld::String#base folder location
+                                        date::String #date
 
-                                    #enable visualization 1 to enable 0 to disable
-                                    vis_enable::Bool
-                                    #pinhole thickness
-                                    pin_thickness::Float64
-                                    shape_type::String
+                                        #enable visualization 1 to enable 0 to disable
+                                        vis_enable::Bool
+                                        #pinhole thickness
+                                        pin_thickness::Float64
+                                        shape_type::String
 
-                                    #pinhole plane details
-                                    distance::Float64
-                                    dir_axis::Char
-                                    act_plain_width::Float64 #actual width in case of modular detector
-                                    plain_width::Float64
-                                    plain_height::Float64
-                                    plain_width_half::Float64
-                                    plain_height_half::Float64
-                                    plain_color::Char
-                                    plain_transp::Float64
-                                    offset::plain_offset
+                                        #pinhole plane details
+                                        distance::Float64
+                                        dir_axis::Char
+                                        act_plain_width::Float64 #actual width in case of modular detector
+                                        plain_width::Float64
+                                        plain_height::Float64
+                                        plain_width_half::Float64
+                                        plain_height_half::Float64
+                                        plain_color::Char
+                                        plain_transp::Float64
+                                        offset::plain_offset
 
-                                    #radiation details
-                                    ray_length::Float64
-                                    angle_step::Float64
+                                        #radiation details
+                                        ray_length::Float64
+                                        angle_step::Float64
 
-                                    #shift for rotation center
-                                    axis_shift::Float64
+                                        #shift for rotation center
+                                        axis_shift::Float64
 
-                                    #detector details
-                                    detector_dir_axis::Char
-                                    act_detector_width::Float64 #actual width in case of modular detector
-                                    detector_width::Float64
-                                    detector_height::Float64
-                                    detector_width_half::Float64
-                                    detector_height_half::Float64
-                                    detector_plain_color::Char
-                                    detector_transp::Float64
+                                        #detector details
+                                        detector_dir_axis::Char
+                                        act_detector_width::Float64 #actual width in case of modular detector
+                                        detector_width::Float64
+                                        detector_height::Float64
+                                        detector_width_half::Float64
+                                        detector_height_half::Float64
+                                        detector_plain_color::Char
+                                        detector_transp::Float64
 
-                                    #detector pixel details
-                                    pixel_width::Float64
-                                    pixel_height::Float64
-                                    pixel_width_half::Float64
-                                    pixel_height_half::Float64
-                                    pix_total_rows::Int
-                                    pix_total_cols::Int
+                                        #detector pixel details
+                                        pixel_width::Float64
+                                        pixel_height::Float64
+                                        pixel_width_half::Float64
+                                        pixel_height_half::Float64
+                                        pix_total_rows::Int
+                                        pix_total_cols::Int
 
-                                    #cubical area of interest details
-                                    grid3D::grid3D_cube
-                                    slice_no::Int
-                                    spots::Int
-
-                                    sphere::sphere_details
-
-
-                                    end;
-                                    function params_list(plane_width, pixel_width, nvoxels, voxel_min, voxel_max)
-                                    voxel_size = (voxel_max - voxel_min)/nvoxels
-                                    return params = params_list(
-                                        pwd(), # base_fld#base folder location
-                                        "14-Jan-2020",# date #date
-                                        # #enable visualization 1 to enable 0 to disable
-                                        0,# vis_enable
-                                        # #pinhole thickness
-                                        0.5,# pin_thickness
-                                        "sphere",# shape_type
-
-                                        # #detector details
-                                        20,# distance
-                                        'Y',# dir_axis
-                                        # 49.152,# act_plain_width #actual width in case of modular detector
-                                        # 49.152,# plain_width
-                                        # 49.152,# plain_height
-                                        # 24.576,# plain_width half
-                                        # 24.576,# plain_height half
-                                        plane_width,# act_plain_width #actual width in case of modular detector
-                                        plane_width,# plain_width
-                                        plane_width,# plain_height
-                                        plane_width/2,# plain_width half
-                                        plane_width/2,# plain_height half
-                                        'y',# plain_color
-                                        0.2,# plain_transp
-                                        plain_offset(
-                                              0,
-                                              0
-                                        ),# offset::detector_offset
-                                        # #radiation details
-                                        150,# ray_length
-                                        30,# angle_step
-                                        #
-                                        # #shift for rotation center
-                                        0,# axis_shift
-                                        #
-                                        # #detector details
-                                        'Y',# detector_dir_axis
-                                        # 49.152,# act_detector_width #actual width in case of modular detector
-                                        # 49.152,# detector_width
-                                        # 49.152,# detector_height
-                                        # 24.576, # detector_width half
-                                        # 24.576,# detector_height half
-                                        # 'm',# detector_plain_color
-                                        # 0.3,# detector_transp
-                                        # #
-                                        # # #detector pixel details
-                                        # 0.048,# pixel_width
-                                        # 0.048,# pixel_height
-                                        # 0.024,# pixel_width_half
-                                        # 0.024,# pixel_height_half
-                                        plane_width,# act_detector_width #actual width in case of modular detector
-                                        plane_width,# detector_width
-                                        plane_width,# detector_height
-                                        plane_width/2,# detector_width_half
-                                        plane_width/2,# detector_height_half
-                                        'm',# detector_plain_color
-                                        0.3,# detector_transp
-                                        #
-                                        # #detector pixel details
-                                        pixel_width,# pixel_width
-                                        pixel_width,# pixel_height
-                                        pixel_width/2,# pixel_width_half
-                                        pixel_width/2,# pixel_height_half
-                                        floor(plane_width/pixel_width),#pix_total_rows
-                                        floor(plane_width/pixel_width),#pix_total_cols
                                         #cubical area of interest details
-                                        grid3D_cube(
-                                              # 128,# nx
-                                              # 128,# ny
-                                              # 128,# nz
-                                              # [-15; -15; -15],# minBound
-                                              # [15; 15; 15],# maxBound
-                                              # 0.234375,# dx
-                                              # 0.234375,# dy
-                                              # 0.234375# dz
-                                              nvoxels,# nx
-                                              nvoxels,# ny
-                                              nvoxels,# nz
-                                              [voxel_min; voxel_min; voxel_min],# minBound
-                                              [voxel_max; voxel_max; voxel_max],# maxBound
-                                              voxel_size,# dx
-                                              voxel_size,# dy
-                                              voxel_size# dz
-                                        ),
-                                        65,# slice_no
-                                        10000,# spots
-                                        #
-                                        sphere_details(
-                                              [0.5],# radius
-                                              [0],# x_shift
-                                              [0],# y_shift
-                                              [0],# z_shift
-                                              ['r'],# sphere_color
-                                              [0.2],# transperancy
-                                              [30],# points
-                                              ['c'],# spot_color
-                                              [0.3],# spot_transperancy
-                                              [10000]# no_of_radiation_spots
-                                        )# sphere:sphere_details
-                                    );
-                                    end
+                                        grid3D::grid3D_cube
+                                        slice_no::Int
+                                        spots::Int
 
-                                    nvoxels = 8
-                                    npixels = nvoxels
-                                    plane_width = 4.0
-                                    pixel_width = (4.0/npixels)
-                                    voxel_min = -2.0
-                                    voxel_max = 2.0
+                                        sphere::sphere_details
 
-                                    params = params_list(plane_width, pixel_width, nvoxels, voxel_min, voxel_max)
 
-                                </pre>                                
-                                <p>Based on your system configuration, modify detector width and cube of interest for the reconstruction. If your the cube of interest for reconstruction contains 64x64x64 voxels, set  <i>nvoxels = 8</i>. Similarly for to set detector width to 15mm modify, <i>plane_width = 15.0</i>. The cube of interest minimum and maximum bound at 4mm, you can modify  <i>voxel_min = -24.0</i> and  <i>voxel_min = 4.0</i>. If the detector contains 100x100 pixels, you can set <i>npixels =100</i>.</p>
+                                        end;
+                                        function params_list(plane_width, pixel_width, nvoxels, voxel_min, voxel_max)
+                                        voxel_size = (voxel_max - voxel_min)/nvoxels
+                                        return params = params_list(
+                                            pwd(), # base_fld#base folder location
+                                            "14-Jan-2020",# date #date
+                                            # #enable visualization 1 to enable 0 to disable
+                                            0,# vis_enable
+                                            # #pinhole thickness
+                                            0.5,# pin_thickness
+                                            "sphere",# shape_type
 
-                                <!-- <pre class="brush: html">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                                YOUR CODES GOES HERE
-                                            </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                                YOUR CODES GOES HERE
-                                            </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                                YOUR CODES GOES HERE
-                                            </div>
-                                        </div>
-                                    </div>
-                                </pre> -->
+                                            # #detector details
+                                            20,# distance
+                                            'Y',# dir_axis
+                                            # 49.152,# act_plain_width #actual width in case of modular detector
+                                            # 49.152,# plain_width
+                                            # 49.152,# plain_height
+                                            # 24.576,# plain_width half
+                                            # 24.576,# plain_height half
+                                            plane_width,# act_plain_width #actual width in case of modular detector
+                                            plane_width,# plain_width
+                                            plane_width,# plain_height
+                                            plane_width/2,# plain_width half
+                                            plane_width/2,# plain_height half
+                                            'y',# plain_color
+                                            0.2,# plain_transp
+                                            plain_offset(
+                                                  0,
+                                                  0
+                                            ),# offset::detector_offset
+                                            # #radiation details
+                                            150,# ray_length
+                                            30,# angle_step
+                                            #
+                                            # #shift for rotation center
+                                            0,# axis_shift
+                                            #
+                                            # #detector details
+                                            'Y',# detector_dir_axis
+                                            # 49.152,# act_detector_width #actual width in case of modular detector
+                                            # 49.152,# detector_width
+                                            # 49.152,# detector_height
+                                            # 24.576, # detector_width half
+                                            # 24.576,# detector_height half
+                                            # 'm',# detector_plain_color
+                                            # 0.3,# detector_transp
+                                            # #
+                                            # # #detector pixel details
+                                            # 0.048,# pixel_width
+                                            # 0.048,# pixel_height
+                                            # 0.024,# pixel_width_half
+                                            # 0.024,# pixel_height_half
+                                            plane_width,# act_detector_width #actual width in case of modular detector
+                                            plane_width,# detector_width
+                                            plane_width,# detector_height
+                                            plane_width/2,# detector_width_half
+                                            plane_width/2,# detector_height_half
+                                            'm',# detector_plain_color
+                                            0.3,# detector_transp
+                                            #
+                                            # #detector pixel details
+                                            pixel_width,# pixel_width
+                                            pixel_width,# pixel_height
+                                            pixel_width/2,# pixel_width_half
+                                            pixel_width/2,# pixel_height_half
+                                            floor(plane_width/pixel_width),#pix_total_rows
+                                            floor(plane_width/pixel_width),#pix_total_cols
+                                            #cubical area of interest details
+                                            grid3D_cube(
+                                                  # 128,# nx
+                                                  # 128,# ny
+                                                  # 128,# nz
+                                                  # [-15; -15; -15],# minBound
+                                                  # [15; 15; 15],# maxBound
+                                                  # 0.234375,# dx
+                                                  # 0.234375,# dy
+                                                  # 0.234375# dz
+                                                  nvoxels,# nx
+                                                  nvoxels,# ny
+                                                  nvoxels,# nz
+                                                  [voxel_min; voxel_min; voxel_min],# minBound
+                                                  [voxel_max; voxel_max; voxel_max],# maxBound
+                                                  voxel_size,# dx
+                                                  voxel_size,# dy
+                                                  voxel_size# dz
+                                            ),
+                                            65,# slice_no
+                                            10000,# spots
+                                            #
+                                            sphere_details(
+                                                  [0.5],# radius
+                                                  [0],# x_shift
+                                                  [0],# y_shift
+                                                  [0],# z_shift
+                                                  ['r'],# sphere_color
+                                                  [0.2],# transperancy
+                                                  [30],# points
+                                                  ['c'],# spot_color
+                                                  [0.3],# spot_transperancy
+                                                  [10000]# no_of_radiation_spots
+                                            )# sphere:sphere_details
+                                        );
+                                        end
+
+                                        nvoxels = 8
+                                        npixels = nvoxels
+                                        plane_width = 4.0
+                                        pixel_width = (4.0/npixels)
+                                        voxel_min = -2.0
+                                        voxel_max = 2.0
+
+                                        params = params_list(plane_width, pixel_width, nvoxels, voxel_min, voxel_max)
+
+                                    </pre>                                
+                                    <p>Based on your system configuration, modify detector width and cube of interest for the reconstruction. If your the cube of interest for reconstruction contains 64x64x64 voxels, set  <i>nvoxels = 8</i>. Similarly for to set detector width to 15mm modify, <i>plane_width = 15.0</i>. The cube of interest minimum and maximum bound at 4mm, you can modify  <i>voxel_min = -24.0</i> and  <i>voxel_min = 4.0</i>. If the detector contains 100x100 pixels, you can set <i>npixels =100</i>.</p>
+                                </div>
+                                <div>
+                                    <h4>Parallel Hole SPECT Simulation</h4>
+                                    <p>Set <i>nvoxels = 4</i>,<i>npixels = 4</i>, <i>plane_width = 4.0</i> and <i>voxel_min = -2.0</i> and <i>voxel_max = 2.0</i> in <strong><i>param_settings.jl</i></strong></p>
+                                    <pre class="brush: html">
+                                        using LSPECT;
+                                        root = pwd();
+                                        include("$root\\param_settings.jl");
+                                        Random.seed!(51122);
+                                        #generate a random phantom
+                                        recon_img = rand(0.0:5.0:10.0,params.grid3D.nx,params.grid3D.ny,params.grid3D.nz);
+                                        #step size for scan angle
+                                        step_angle = 2.0;
+                                        all_rot_angle = collect(0.0:step_angle:90.0);
+                                        mkpath("data\\jour\\$var");
+                                        write("$root\\data\\jour\\$var\\test_recon_$(params.grid3D.nx).dat",string(vec(recon_img)));
+                                        #gap between object and detector
+                                        distance = 3.0;
+                                        #initialize projection image
+                                        proj_img = zeros(length(all_rot_angle), params.pix_total_rows*params.pix_total_cols);
+                                        all_row = 1:params.pix_total_rows;
+                                        all_col = 1: params.pix_total_cols;
+                                        (all_row,all_col) = LSPECT.reconProcess.meshgrid(all_row,all_col);
+                                        all_loc =  [all_row all_col];
+                                        (all_pinhole_pix_loc, all_pixel_centers) = LSPECT.reconProcess.generate_pix_pinhole_coord(distance, gap, pinhole_pitch, all_rot_angle, all_loc,params);
+                                        #Initialize start and end points for ray tracing
+                                        start_point = Vector{Float64}(undef,3);
+                                        end_point = similar(start_point);
+                                        mutable struct ray_detail{T <: Real}
+                                            position::Vector{T}
+                                            velocity::Vector{T}
+                                        end;
+                                        ray = [ray_detail(
+                                             [1.0,0.0,0.0],
+                                             [0.0,0.0,0.1]
+                                        ) 
+                                        for i in 1:Threads.nthreads()]
+                                        edges = (params.grid3D.minBound[1]:params.grid3D.dx:params.grid3D.maxBound[1],
+                                            params.grid3D.minBound[3]:params.grid3D.dy:params.grid3D.maxBound[2],
+                                            params.grid3D.minBound[3]:params.grid3D.dz:params.grid3D.maxBound[3]
+                                        );
+                                        args_v = (params, distance, recon_img, all_rot_angle, start_point, end_point, ray, edges, all_loc);
+                                        proj_img = LSPECT.prob_parhole_recon_VRT_distri_mohamed(args_v...);
+                                    </pre>
+                                </div>
+                                
                             </div>
                             <!-- end col -->
                         </div>
@@ -404,6 +433,7 @@
 
                     </section>
                     <!-- end section -->
+                    
                 </div>
                 <!-- // end .col -->
 
